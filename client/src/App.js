@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+import { Button } from 'react-bootstrap';
 import './App.css';
+import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
+  let apiString = "";
+
+  function getData(){
+    axios.get('http://localhost:5000/' + "data").then(resp => {
+      console.log(resp);
+      apiString = resp.data;
+    })
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Button onClick={getData} className="m-5">Get API Data</Button>
+      <h1>{apiString}</h1>
     </div>
   );
 }
