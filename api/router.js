@@ -1,8 +1,8 @@
 import express from "express";
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.send("hello from server");
+router.get('/data', (req, res) => {
+    res.send("Hello From Node Server!");
 })
 
 export default router;
