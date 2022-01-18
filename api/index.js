@@ -16,8 +16,8 @@ server.listen(process.env.PORT, () => {
 });
 
 io.on('connection', (socket) => {
-    socket.on('chat_message', (msg) => {
-        socket.emit('chat_message', msg);
-        console.log('message: ' + msg);
+    socket.on('message', ({name,message}) => {
+        io.emit('message', {name,message});
+        console.log({name,message});
     });
 });
