@@ -7,14 +7,17 @@ import './App.css';
 function App() {
     const [state, setState] = useState({message: "", name: ""})
     const [chat, setChat] = useState([])
+    const [disc, setDisc] = useState("")
     const socketRef = useRef()
     useEffect(
         () => {
-            socketRef.current = io.connect("http://localhost:5000", {transports: ['websocket']})
+            socketRef.current = io.connect("http://localhost:5001", {transports: ['websocket']})
             socketRef.current.on("message", ({name, message}) => {
                 setChat([...chat, {name, message}])
             })
-            return () => socketRef.current.disconnect()
+            socketRef.current.on("dis", (msg) => {
+                setDisc(msg);
+            })
         },
         [chat]
     )
@@ -63,6 +66,7 @@ function App() {
                 <h1>Chat Log</h1>
                 {renderChat()}
             </div>
+            <h1>{disc}</h1>
         </div>
     );
 }

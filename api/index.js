@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(router);
 const server = http.createServer(app);
 const io = new Server(server);
-server.listen(process.env.PORT, () => {
+server.listen(5001, () => {
     console.log('listening on *:5000');
 });
 
@@ -19,5 +19,10 @@ io.on('connection', (socket) => {
     socket.on('message', ({name,message}) => {
         io.emit('message', {name,message});
         console.log({name,message});
+    });
+
+    socket.on('disconnect', function() {
+        io.emit('dis', "Got disconnect!");
+        console.log('Got disconnect!');
     });
 });
